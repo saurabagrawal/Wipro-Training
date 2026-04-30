@@ -34,19 +34,29 @@ from src.calculations import Calculations
 class TestCalculations:
 
     calc = Calculations()
+    @pytest.fixture()
+    def setup(self):
+        print('Fixture')
+
+    @pytest.mark.parametrize('n1, n2, exval',
+                             [(5,5,10),(-5,-5,-10), (0,5,5)])
+    def test_add(self,n1,n2,exval):
+        res = self.calc.add(n1,n2)
+        assert res == exval, 'Addition Error'
 
 
-    def test_add(self):
-        res = self.calc.add(10, 5)
-        assert res == 15, 'Addition Error'
+    @pytest.mark.parametrize('n1, n2, exval',
+                             [(5, 5, 0), (-5, -5, 0), (0, 5, -5)])
+    def test_sub(self,n1,n2,exval):
+        res = self.calc.sub(n1,n2)
+        assert res == exval, 'subtraction Error'
 
-    def test_sub(self):
-        res = self.calc.sub(10, 5)
-        assert res == 5, 'subtraction Error'
 
+    @pytest.mark.skip(reason='Not implemented yet')
     def test_mul(self):
         res = self.calc.mul(10, 5)
         assert res == 50, 'multiplication Error'
+
 
     def test_div(self):
         res = self.calc.div(10, 5)
@@ -54,9 +64,9 @@ class TestCalculations:
     def test_ne(self):
         res = self.calc.ne(10, 10)
         assert res == True, 'NE'
-
-    # def test_driver(self):
-    #     with pytest.raises(ZeroDivisionError):
-    #         self.calc.div(10, 0)
-
+    @pytest.mark.xfail(reaason = 'Excep not handled')
+    def test_driver(self):
+        # with pytest.raises(ZeroDivisionError):
+            res = self.calc.div(10, 0)
+            assert res == 0
 

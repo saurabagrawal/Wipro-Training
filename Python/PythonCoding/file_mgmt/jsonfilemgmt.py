@@ -12,9 +12,8 @@ def write_json(filename):
 
 def read_json(filename):
     with open(filename , 'r' ) as file:
-        reader = json.load(file)
-        for row in reader:
-            print(f'None: {row['name']}, Age: {row['age']}')
+        data = json.load(file)
+        print(f'None: {data['name']}, Age: {data['age']}')
 
 def delete_json(filename):
     if os.path.exists(filename):
